@@ -3,6 +3,7 @@
 pragma solidity ^0.8.0;
 
 import "./PriceConvertor.sol";
+import "hardhat/console.sol";
 
 contract FundMe {
     using PriceConvertor for uint256;
@@ -46,18 +47,13 @@ contract FundMe {
         address[] memory fundersArr = s_fundersList;
         for (
             uint256 funderIndex = 0;
-            funderIndex > fundersArr.length;
+            funderIndex < fundersArr.length;
             funderIndex++
         ) {
             address funderAdd = fundersArr[funderIndex];
             s_funders[funderAdd] = 0;
         }
         s_fundersList = new address[](0);
-        // payable(msg.sender).transfer(address(this).balance); // throws error automatically
-        // (bool callSuccess, ) = payable(msg.sender).call{
-        //     value: address(this).balance
-        // }("");
-        // require(callSuccess, "Withdraw failed");
         (bool success, ) = i_owner.call{value: address(this).balance}("");
         require(success);
     }

@@ -126,6 +126,7 @@ describe("FundMe", function () {
             const endingDeployerBalance = await fundMe.provider.getBalance(
                 deployer
             );
+
             // Assert
             assert.equal(
                 startingFundMeBalance.add(startingDeployerBalance).toString(),
